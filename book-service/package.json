@@ -1,0 +1,31 @@
+{
+  "name": "book-service",
+  "version": "1.0.0",
+  "description": "Book service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devstart": "nodemon index.js",
+    "test": "npx cypress run --spec \"cypress/integration/books-api.spec.js\" --headless",
+    "start-mongo-test": "docker run -d -p 27017-27019:27017-27019 --name mongodb-test mongo",
+    "clean-mongo-test": "docker container stop mongodb-test && docker container rm mongodb-test",
+    "seed-mongo": "node cypress/db/book-seeder.js",
+    "start-server": "npm start",
+    "ci": "start-server-and-test start-server http://localhost:3300/books/find/all test",
+    "ci-all": "run-s start-mongo-test ci clean-mongo-test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "mongoose": "^5.12.11"
+  },
+  "devDependencies": {
+    "cypress": "^7.4.0",
+    "mongoose-seed": "^0.6.0",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^1.12.3"
+  }
+}
